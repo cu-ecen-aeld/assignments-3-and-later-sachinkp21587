@@ -128,3 +128,4 @@ cd "$OUTDIR/rootfs"
 chmod -R 0777 $OUTDIR 
 find . | cpio -o --format=newc > ../initramfs.cpio
 gzip -c ../initramfs.cpio > ../initramfs.cpio.gz
+
