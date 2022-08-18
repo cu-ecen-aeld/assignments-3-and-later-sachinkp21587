@@ -31,7 +31,7 @@ cd "$OUTDIR"
 if [ ! -d "${OUTDIR}/linux-stable" ]; then
     #Clone only if the repository does not exist.
 	echo "CLONING GIT LINUX STABLE VERSION ${KERNEL_VERSION} IN ${OUTDIR}"
-	sudo git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
+#	sudo git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
 fi
 
 #if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
@@ -49,6 +49,8 @@ fi
 
 #echo "Adding the Image in outdir"
 #sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
+
+su sachin
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
@@ -134,3 +136,4 @@ sudo chmod -R 0777 $OUTDIR
 find . | cpio -o --format=newc > ../initramfs.cpio
 sudo gzip -c ../initramfs.cpio > ../initramfs.cpio.gz
 
+su root
