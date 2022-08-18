@@ -27,24 +27,24 @@ cd "$OUTDIR"
 if [ ! -d "${OUTDIR}/linux-stable" ]; then
     #Clone only if the repository does not exist.
 	echo "CLONING GIT LINUX STABLE VERSION ${KERNEL_VERSION} IN ${OUTDIR}"
-#	sudo git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
+	sudo git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
 fi
 
-#if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
-#    cd linux-stable
-#    sudo chmod -R 0777 ${OUTDIR}/linux-stable/
-#    echo "Checking out version ${KERNEL_VERSION}"   
+if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
+    cd linux-stable
+    sudo chmod -R 0777 ${OUTDIR}/linux-stable/
+    echo "Checking out version ${KERNEL_VERSION}"   
 
-#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
-#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
-#    make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
-#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
-#    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
-#    # TODO: Add your kernel build steps here
-#fi
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
+    make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
+    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
+    # TODO: Add your kernel build steps here
+fi
 
 #echo "Adding the Image in outdir"
-#sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
+sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
@@ -62,9 +62,7 @@ sudo mkdir usr/bin usr/lib usr/sbin
 sudo mkdir -p var/log
 
 sudo chown -R root:root *
-echo "***************************** 1"
-echo $PATH
-echo "***************************** 2"
+
 cd "$OUTDIR"
 if [ ! -d "${OUTDIR}/busybox" ]
 then
@@ -74,29 +72,25 @@ then
     cd busybox
     sudo git checkout -f ${BUSYBOX_VERSION}
     # TODO:  Configure busybox
-    echo "***************************** 3"
     make distclean
-    echo "***************************** 4"
     make defconfig
 else
     sudo chown -R root:root *
     sudo chmod -R 777 busybox
     cd busybox
 fi
-echo "***************************** 5"
+
 # TODO: Make and install busybox
 #make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" 
 sudo chmod u+s ${OUTDIR}/busybox
-echo "***************************** 6"
-make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" install
 
+make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" install
 
 cd ../rootfs
 
 echo "Library dependencies"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
-
 
 echo "Library dependencies"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
