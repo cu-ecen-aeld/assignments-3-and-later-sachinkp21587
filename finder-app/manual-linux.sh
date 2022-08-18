@@ -39,7 +39,7 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
     make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
-    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
     # TODO: Add your kernel build steps here
 fi
 
