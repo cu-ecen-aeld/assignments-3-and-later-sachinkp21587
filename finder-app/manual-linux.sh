@@ -39,11 +39,11 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     sudo chmod -R 0777 ${OUTDIR}/linux-stable/
     echo "Checking out version ${KERNEL_VERSION}"   
 
-    make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- mrproper
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
-    make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- all
-    make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- modules
-    sudo make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu dtbs
+    make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
+    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
     # TODO: Add your kernel build steps here
 fi
 
