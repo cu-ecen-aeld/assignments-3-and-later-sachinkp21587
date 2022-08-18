@@ -68,7 +68,9 @@ sudo mkdir usr/bin usr/lib usr/sbin
 sudo mkdir -p var/log
 
 sudo chown -R root:root *
-
+echo "***************************** 1"
+echo $PATH
+echo "***************************** 2"
 cd "$OUTDIR"
 if [ ! -d "${OUTDIR}/busybox" ]
 then
@@ -78,17 +80,20 @@ then
     cd busybox
     sudo git checkout -f ${BUSYBOX_VERSION}
     # TODO:  Configure busybox
+    echo "***************************** 3"
     make distclean
+    echo "***************************** 4"
     make defconfig
 else
     sudo chown -R root:root *
     sudo chmod -R 777 busybox
     cd busybox
 fi
-
+echo "***************************** 5"
 # TODO: Make and install busybox
 #make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" 
 sudo chmod u+s ${OUTDIR}/busybox
+echo "***************************** 6"
 sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" install
 
 
