@@ -111,7 +111,7 @@ cd "${FINDER_APP_DIR}"
 sudo make clean
 sudo make HOSTCC=gcc-9 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 # TODO: Copy the finder related scripts and executables to the /home directory
-sudo cp -a Makefile writer finder.sh finder-test.sh autorun-qemu.sh "${OUTDIR}/rootfs/home"
+sudo cp -a writer finder.sh finder-test.sh autorun-qemu.sh "${OUTDIR}/rootfs/home"
 sudo mkdir "${OUTDIR}/rootfs/home/conf"
 sudo cp -a conf/username.txt "${OUTDIR}/rootfs/home/conf"
 
