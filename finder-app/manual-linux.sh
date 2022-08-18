@@ -5,10 +5,6 @@
 set -e
 set -u
 
-echo "*******************************************************"
-whoami
-echo "*******************************************************"
-
 OUTDIR=/tmp/aeld
 KERNEL_REPO=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
 KERNEL_VERSION=v5.1.10
@@ -49,8 +45,6 @@ fi
 
 #echo "Adding the Image in outdir"
 #sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
-
-su sachin
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
@@ -140,5 +134,3 @@ cd "$OUTDIR/rootfs"
 sudo chmod -R 0777 $OUTDIR 
 find . | cpio -o --format=newc > ../initramfs.cpio
 sudo gzip -c ../initramfs.cpio > ../initramfs.cpio.gz
-
-su root
