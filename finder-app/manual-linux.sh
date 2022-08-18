@@ -5,9 +5,9 @@
 set -e
 set -u
 
-echo *******************************************************
+echo "*******************************************************"
 whoami
-echo *******************************************************
+echo "*******************************************************"
 
 OUTDIR=/tmp/aeld
 KERNEL_REPO=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
@@ -34,21 +34,21 @@ if [ ! -d "${OUTDIR}/linux-stable" ]; then
 	sudo git clone ${KERNEL_REPO} --depth 1 --single-branch --branch ${KERNEL_VERSION}
 fi
 
-if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
-    cd linux-stable
-    sudo chmod -R 0777 ${OUTDIR}/linux-stable/
-    echo "Checking out version ${KERNEL_VERSION}"   
+#if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
+#    cd linux-stable
+#    sudo chmod -R 0777 ${OUTDIR}/linux-stable/
+#    echo "Checking out version ${KERNEL_VERSION}"   
 
-    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
-    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
-    make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
-    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
-    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
-    # TODO: Add your kernel build steps here
-fi
+#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
+#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
+#    make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
+#    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
+#    sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} dtbs
+#    # TODO: Add your kernel build steps here
+#fi
 
-echo "Adding the Image in outdir"
-sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
+#echo "Adding the Image in outdir"
+#sudo cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
