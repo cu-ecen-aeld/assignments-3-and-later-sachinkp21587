@@ -88,7 +88,7 @@ echo "***************************** 5"
 #make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" 
 sudo chmod u+s ${OUTDIR}/busybox
 echo "***************************** 6"
-sudo make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" install
+make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} CONFIG_PREFIX="${OUTDIR}/rootfs" install
 
 
 cd ../rootfs
