@@ -92,10 +92,6 @@ echo "Library dependencies"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
-echo "Library dependencies"
-${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
-${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
-
 # TODO: Add library dependencies to rootfs
 SYSROOT=`${CROSS_COMPILE}gcc --print-sysroot`
 cp -a "${SYSROOT}"/lib/* lib/
@@ -128,4 +124,3 @@ cd "$OUTDIR/rootfs"
 chmod -R 0777 $OUTDIR 
 find . | cpio -o --format=newc > ../initramfs.cpio
 gzip -c ../initramfs.cpio > ../initramfs.cpio.gz
-
